@@ -53,9 +53,14 @@ create_symlink "$DOTFILES_DIR/wezterm" "$HOME/.config/wezterm"
 
 # Nushell configuration
 echo -e "\n${GREEN}=== Setting up Nushell ===${NC}"
+# macOS default location
 NUSHELL_CONFIG_DIR="$HOME/Library/Application Support/nushell"
 create_symlink "$DOTFILES_DIR/nushell/env.nu" "$NUSHELL_CONFIG_DIR/env.nu"
 create_symlink "$DOTFILES_DIR/nushell/config.nu" "$NUSHELL_CONFIG_DIR/config.nu"
+# Standard XDG config location
+NUSHELL_XDG_DIR="$HOME/.config/nushell"
+create_symlink "$DOTFILES_DIR/nushell/env.nu" "$NUSHELL_XDG_DIR/env.nu"
+create_symlink "$DOTFILES_DIR/nushell/config.nu" "$NUSHELL_XDG_DIR/config.nu"
 
 # Zsh configuration
 echo -e "\n${GREEN}=== Setting up Zsh ===${NC}"
