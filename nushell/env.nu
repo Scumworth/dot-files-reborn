@@ -4,8 +4,8 @@
 # Basic environment setup
 $env.HOME = "/Users/danielmcninch"
 
-# Homebrew paths
-let brew_prefix = (brew --prefix | str trim)
+# Homebrew paths - hardcode for Apple Silicon Mac
+let brew_prefix = "/opt/homebrew"
 
 # OpenSSL flags for compilation
 $env.LDFLAGS = $"-L($brew_prefix)/opt/openssl/lib"
@@ -38,25 +38,46 @@ $env.PNPM_HOME = $"($env.HOME)/Library/pnpm"
 # MANPATH
 $env.MANPATH = "/usr/local/man"
 
+# ASDF configuration
+$env.ASDF_DIR = $"($env.HOME)/.asdf"
+
 # Path configuration
 # Note: Nushell uses $env.PATH as a list, not a colon-separated string
-$env.PATH = (
-    $env.PATH 
-    | split row (char esep)
-    | prepend $"($env.HOME)/bin"
-    | prepend "/usr/local/bin"
-    | prepend $"($env.HOME)/.local/bin"
-    | prepend $"($brew_prefix)/opt/grep/libexec/gnubin"
-    | prepend "/Applications/Racket v8.7/bin"
-    | prepend "/Applications/love_dir"
-    | prepend $env.PNPM_HOME
-    | prepend $"($brew_prefix)/bin"
-    | prepend $"($brew_prefix)/sbin"
-    | prepend $"($env.HOME)/.asdf/shims"
-    | prepend "/opt/homebrew/bin"
-    | prepend "/opt/homebrew/sbin"
-    | uniq
-)
+$env.PATH = [
+    # User-specific paths (highest priority)
+    $"($env.HOME)/bin"
+    $"($env.HOME)/.local/bin"
+    
+    # Programming language tools
+    $"($env.HOME)/.cargo/bin"
+    $"($env.HOME)/go/bin"
+    $"($env.HOME)/.deno/bin"
+    
+    # ASDF version manager
+    $"($env.HOME)/.asdf/shims"
+    $"($env.HOME)/.asdf/bin"
+    $"($env.HOME)/.asdf/installs/nodejs/22.1.0/bin"
+    $"($env.HOME)/.asdf/plugins/nodejs/shims"
+    
+    # Package managers
+    $env.PNPM_HOME
+    
+    # Homebrew
+    $"($brew_prefix)/bin"
+    $"($brew_prefix)/sbin"
+    $"($brew_prefix)/opt/grep/libexec/gnubin"
+    
+    # Applications
+    "/Applications/Racket v8.7/bin"
+    "/Applications/love_dir"
+    
+    # System paths
+    "/usr/local/bin"
+    "/usr/bin"
+    "/bin"
+    "/usr/sbin"
+    "/sbin"
+]
 
 # Starship prompt - create empty prompt hooks that will be overridden by starship
 $env.STARSHIP_SHELL = "nu"
