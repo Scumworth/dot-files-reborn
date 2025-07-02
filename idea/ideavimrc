@@ -12,7 +12,6 @@ set clipboard+=ideaput
 let mapleader=" "           " Set leader to space (matching Neovim)
 
 """ IDEAVIM PLUGINS """
-set NERDTree                " FIle explorer
 set surround                " Emulate vim-surround
 set timeoutlen=5000         " Timeout for which-key
 set multiple-cursors        " Multiple cursor support
@@ -24,21 +23,10 @@ set ideajoin                " Smart line joining
 set idearefactormode=keep   " Keep mode during refactoring
 set showmode                " Show current mode
 
-""" NAVIGATION (matching Neovim) """
-" Window navigation with Ctrl+hjkl
-sethandler <c-j> a:vim
-sethandler <c-k> a:vim
-sethandler <c-h> a:vim
-sethandler <c-l> a:vim
-
 """ ENSURE IDEAVIM HANDLES CONFLICTING SHORTCUTS """
 " Force IdeaVim to handle common conflicting shortcuts
-sethandler <c-n> a:vim
 sethandler <c-p> a:vim
 sethandler <c-f> a:vim
-sethandler <c-t> a:vim
-sethandler <c-z> a:vim
-sethandler <c-c> a:vim
 sethandler <c-=> a:vim
 sethandler <c--> a:vim
 
@@ -47,15 +35,6 @@ sethandler <c-w> a:vim
 sethandler <c-g> a:vim
 sethandler <c-o> a:vim
 sethandler <c-i> a:vim
-nnoremap <c-h> <c-w>h
-nnoremap <c-l> <c-w>l
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-
-""" FILE MANAGEMENT """
-" File explorer (Neo-tree keybinding from Neovim)
-nnoremap <C-n> :NERDTree<CR>
-nnoremap <leader>e :NERDTree<CR>
 
 " File search (Telescope keybindings from Neovim)
 nnoremap <C-p> :action GotoFile<CR>
@@ -69,7 +48,6 @@ nnoremap <leader>fw :action FindInPath<CR>
 " Code navigation
 nnoremap gd :action GotoDeclaration<CR>
 nnoremap gr :action FindUsages<CR>
-nnoremap K :action QuickJavaDoc<CR>
 nnoremap <leader>ca :action ShowIntentionActions<CR>
 vnoremap <leader>ca :action ShowIntentionActions<CR>
 
@@ -130,10 +108,6 @@ nnoremap zo :action ExpandRegion<CR>
 nnoremap <leader>zc :action CollapseAllRegions<CR>
 nnoremap <leader>zo :action ExpandAllRegions<CR>
 
-""" TERMINAL """
-nnoremap <c-t> :action ActivateTerminalToolWindow<CR>
-nnoremap <leader>t :action Terminal.OpenInTerminal<CR>
-
 """ MISCELLANEOUS """
 " Quick access to ideavimrc
 nnoremap \e :e ~/.ideavimrc<CR>
@@ -141,9 +115,6 @@ nnoremap \r :action IdeaVim.ReloadVimRc.reload<CR>
 
 " Use semicolon for command mode (from Neovim)
 nnoremap ; :
-
-" Distraction free mode
-nnoremap <c-z> :action ToggleDistractionFreeMode<CR>
 
 " Font size
 nnoremap <C-=> :action EditorIncreaseFontSize<CR>
