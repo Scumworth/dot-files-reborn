@@ -50,6 +50,11 @@ $env.PATH = (
     | prepend "/Applications/Racket v8.7/bin"
     | prepend "/Applications/love_dir"
     | prepend $env.PNPM_HOME
+    | prepend $"($brew_prefix)/bin"
+    | prepend $"($brew_prefix)/sbin"
+    | prepend $"($env.HOME)/.asdf/shims"
+    | prepend "/opt/homebrew/bin"
+    | prepend "/opt/homebrew/sbin"
     | uniq
 )
 
