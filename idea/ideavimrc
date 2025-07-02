@@ -12,14 +12,11 @@ set clipboard+=ideaput
 let mapleader=" "           " Set leader to space (matching Neovim)
 
 """ IDEAVIM PLUGINS """
+set NERDTree                " FIle explorer
 set surround                " Emulate vim-surround
-set NERDTree                " File explorer
-set which-key               " Show key mappings
 set timeoutlen=5000         " Timeout for which-key
 set multiple-cursors        " Multiple cursor support
 set commentary              " gcc to comment line
-set argtextobj              " Argument text objects (via, daa)
-set exchange                " Exchange text objects
 set highlightedyank         " Highlight yanked text
 
 """ EDITOR BEHAVIOR """
@@ -54,10 +51,6 @@ nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
-
-" Tab navigation
-nnoremap <TAB> :action NextTab<CR>
-nnoremap <S-TAB> :action PreviousTab<CR>
 
 """ FILE MANAGEMENT """
 " File explorer (Neo-tree keybinding from Neovim)
@@ -141,21 +134,6 @@ nnoremap <leader>zo :action ExpandAllRegions<CR>
 nnoremap <c-t> :action ActivateTerminalToolWindow<CR>
 nnoremap <leader>t :action Terminal.OpenInTerminal<CR>
 
-""" TAB MANAGEMENT """
-nnoremap <leader>q :action CloseContent<CR>
-nnoremap <leader>Q :action ReopenClosedTab<CR>
-
-""" RUNNING AND DEBUGGING """
-nnoremap ,c :action CompileDirty<CR>
-nnoremap ,r :action Run<CR>
-nnoremap ,R :action RunAnything<CR>
-nnoremap ,b :action Debug<CR>
-nnoremap ,d :action DebugClass<CR>
-nnoremap ,t :action RerunTests<CR>
-nnoremap ,T :action RerunFailedTests<CR>
-nnoremap ,p :action ToggleLineBreakpoint<CR>
-nnoremap ,i :action ParameterInfo<CR>
-
 """ MISCELLANEOUS """
 " Quick access to ideavimrc
 nnoremap \e :e ~/.ideavimrc<CR>
@@ -163,9 +141,6 @@ nnoremap \r :action IdeaVim.ReloadVimRc.reload<CR>
 
 " Use semicolon for command mode (from Neovim)
 nnoremap ; :
-
-" Escape alternatives
-map <C-c> <Esc>
 
 " Distraction free mode
 nnoremap <c-z> :action ToggleDistractionFreeMode<CR>
