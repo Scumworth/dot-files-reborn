@@ -54,5 +54,6 @@ $env.PATH = (
 )
 
 # Starship prompt - create empty prompt hooks that will be overridden by starship
+$env.STARSHIP_SHELL = "nu"
 $env.PROMPT_COMMAND = {|| ""}
 $env.PROMPT_COMMAND_RIGHT = {|| ""}

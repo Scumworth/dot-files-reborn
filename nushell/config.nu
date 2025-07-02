@@ -7,7 +7,7 @@ source ~/.asdf/asdf.nu
 alias vim = nvim
 alias zshconfig = nvim ~/.zshrc
 alias ohmyzsh = nvim ~/.oh-my-zsh
-c
+
 # The default config record
 $env.config = {
     show_banner: false # disable welcome banner
