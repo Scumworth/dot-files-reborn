@@ -67,12 +67,30 @@ return {
         disable_multiplexer_nav_when_zoomed = true,
       })
 
+      -- Set up the IS_NVIM user var for WezTerm integration
+      vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter", "VimEnter" }, {
+        callback = function()
+          vim.fn.system("wezterm cli set-user-var IS_NVIM true 2>/dev/null")
+        end,
+      })
+      vim.api.nvim_create_autocmd({ "VimLeave" }, {
+        callback = function()
+          vim.fn.system("wezterm cli set-user-var IS_NVIM false 2>/dev/null")
+        end,
+      })
+
       -- Keymaps for navigation
       vim.keymap.set("n", "<C-h>", require("smart-splits").move_cursor_left)
       vim.keymap.set("n", "<C-j>", require("smart-splits").move_cursor_down)
       vim.keymap.set("n", "<C-k>", require("smart-splits").move_cursor_up)
       vim.keymap.set("n", "<C-l>", require("smart-splits").move_cursor_right)
       vim.keymap.set("n", "<C-\\>", require("smart-splits").move_cursor_previous)
+      
+      -- Terminal mode navigation
+      vim.keymap.set("t", "<C-h>", require("smart-splits").move_cursor_left)
+      vim.keymap.set("t", "<C-j>", require("smart-splits").move_cursor_down)
+      vim.keymap.set("t", "<C-k>", require("smart-splits").move_cursor_up)
+      vim.keymap.set("t", "<C-l>", require("smart-splits").move_cursor_right)
 
       -- Keymaps for resizing
       vim.keymap.set("n", "<C-A-h>", require("smart-splits").resize_left)

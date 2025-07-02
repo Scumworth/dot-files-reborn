@@ -36,6 +36,47 @@ config.animation_fps = 60
 -- Leader key configuration (like tmux prefix)
 config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 }
 
+-- Helper function to check if the current pane is running Neovim
+local function is_vim(pane)
+	-- This is set by smart-splits.nvim plugin
+	return pane:get_user_vars().IS_NVIM == "true"
+end
+
+-- Direction key mapping for navigation
+local direction_keys = {
+	Left = "h",
+	Down = "j",
+	Up = "k",
+	Right = "l",
+	-- reverse lookup
+	h = "Left",
+	j = "Down",
+	k = "Up",
+	l = "Right",
+}
+
+-- Helper function to create split navigation keybindings
+local function split_nav(resize_or_move, key)
+	return {
+		key = key,
+		mods = resize_or_move == "resize" and "CTRL|ALT" or "CTRL",
+		action = wezterm.action_callback(function(win, pane)
+			if is_vim(pane) then
+				-- Pass the keys through to vim/nvim
+				win:perform_action({
+					SendKey = { key = key, mods = resize_or_move == "resize" and "CTRL|ALT" or "CTRL" },
+				}, pane)
+			else
+				if resize_or_move == "resize" then
+					win:perform_action({ AdjustPaneSize = { direction_keys[key], 3 } }, pane)
+				else
+					win:perform_action({ ActivatePaneDirection = direction_keys[key] }, pane)
+				end
+			end
+		end),
+	}
+end
+
 -- Key bindings
 config.keys = {
 	-- Send Ctrl+a when pressing leader twice (like tmux)
@@ -45,32 +86,31 @@ config.keys = {
 		action = wezterm.action.SendKey({ key = "a", mods = "CTRL" }),
 	},
 
-	-- Pane navigation with Ctrl+hjkl (no prefix needed, like your tmux config)
-	{
-		key = "h",
-		mods = "CTRL",
-		action = wezterm.action.ActivatePaneDirection("Left"),
-	},
-	{
-		key = "j",
-		mods = "CTRL",
-		action = wezterm.action.ActivatePaneDirection("Down"),
-	},
-	{
-		key = "k",
-		mods = "CTRL",
-		action = wezterm.action.ActivatePaneDirection("Up"),
-	},
-	{
-		key = "l",
-		mods = "CTRL",
-		action = wezterm.action.ActivatePaneDirection("Right"),
-	},
+	-- Smart navigation between WezTerm panes and Neovim splits
+	split_nav("move", "h"),
+	split_nav("move", "j"),
+	split_nav("move", "k"),
+	split_nav("move", "l"),
+
+	-- Smart resizing (Ctrl+Alt+hjkl)
+	split_nav("resize", "h"),
+	split_nav("resize", "j"),
+	split_nav("resize", "k"),
+	split_nav("resize", "l"),
+
 	-- Previous pane (like tmux C-\)
 	{
 		key = "\\",
 		mods = "CTRL",
-		action = wezterm.action.ActivatePaneDirection("Prev"),
+		action = wezterm.action_callback(function(win, pane)
+			if is_vim(pane) then
+				win:perform_action({
+					SendKey = { key = "\\", mods = "CTRL" },
+				}, pane)
+			else
+				win:perform_action(wezterm.action.ActivatePaneDirection("Prev"), pane)
+			end
+		end),
 	},
 
 	-- Split panes with leader key (like tmux prefix + | and -)

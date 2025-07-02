@@ -1,0 +1,176 @@
+""" BASIC VIM OPTIONS (from Neovim init.lua) """
+set ignorecase              " Case-insensitive searching
+set smartcase               " Unless search has uppercase letters
+set hlsearch                " Highlight matches
+set incsearch               " Incremental searching
+set scrolloff=3             " Keep 3 lines visible when scrolling
+set number                  " Show line numbers
+set clipboard+=unnamed      " Use system clipboard
+set clipboard+=ideaput
+
+""" LEADER KEY """
+let mapleader=" "           " Set leader to space (matching Neovim)
+
+""" IDEAVIM PLUGINS """
+set surround                " Emulate vim-surround
+set NERDTree                " File explorer
+set which-key               " Show key mappings
+set timeoutlen=5000         " Timeout for which-key
+set multiple-cursors        " Multiple cursor support
+set commentary              " gcc to comment line
+set argtextobj              " Argument text objects (via, daa)
+set exchange                " Exchange text objects
+set highlightedyank         " Highlight yanked text
+
+""" EDITOR BEHAVIOR """
+set ideajoin                " Smart line joining
+set idearefactormode=keep   " Keep mode during refactoring
+set showmode                " Show current mode
+
+""" NAVIGATION (matching Neovim) """
+" Window navigation with Ctrl+hjkl
+sethandler <c-j> a:vim
+sethandler <c-k> a:vim
+sethandler <c-h> a:vim
+sethandler <c-l> a:vim
+
+""" ENSURE IDEAVIM HANDLES CONFLICTING SHORTCUTS """
+" Force IdeaVim to handle common conflicting shortcuts
+sethandler <c-n> a:vim
+sethandler <c-p> a:vim
+sethandler <c-f> a:vim
+sethandler <c-t> a:vim
+sethandler <c-z> a:vim
+sethandler <c-c> a:vim
+sethandler <c-=> a:vim
+sethandler <c--> a:vim
+
+" Additional handlers for leader combinations that might conflict
+sethandler <c-w> a:vim
+sethandler <c-g> a:vim
+sethandler <c-o> a:vim
+sethandler <c-i> a:vim
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+
+" Tab navigation
+nnoremap <TAB> :action NextTab<CR>
+nnoremap <S-TAB> :action PreviousTab<CR>
+
+""" FILE MANAGEMENT """
+" File explorer (Neo-tree keybinding from Neovim)
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <leader>e :NERDTree<CR>
+
+" File search (Telescope keybindings from Neovim)
+nnoremap <C-p> :action GotoFile<CR>
+nnoremap <C-f> :action FindInPath<CR>
+nnoremap <leader>ff :action GotoFile<CR>
+nnoremap <leader>fg :action FindInPath<CR>
+nnoremap <leader>fs :action GotoFile<CR>
+nnoremap <leader>fw :action FindInPath<CR>
+
+""" LSP-LIKE FEATURES (from Neovim LSP config) """
+" Code navigation
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap gr :action FindUsages<CR>
+nnoremap K :action QuickJavaDoc<CR>
+nnoremap <leader>ca :action ShowIntentionActions<CR>
+vnoremap <leader>ca :action ShowIntentionActions<CR>
+
+" Formatting (from Neovim none-ls config)
+nnoremap <leader>gf :action ReformatCode<CR>
+nnoremap <leader>= :action ReformatCode<CR>
+nnoremap <leader>o :action OptimizeImports<CR>
+
+""" ERROR NAVIGATION """
+nnoremap <leader>x :action GotoNextError<CR>
+nnoremap <leader>X :action GotoPreviousError<CR>
+nnoremap <leader>e :action ShowErrorDescription<CR>
+
+""" GIT INTEGRATION (LazyGit equivalent) """
+nnoremap <leader>lg :action Git.Menu<CR>
+nnoremap <leader>gb :action Git.Branches<CR>
+nnoremap <leader>gp :action Git.Pull<CR>
+nnoremap <leader>gu :action Git.Push<CR>
+nnoremap <leader>gr :action Git.Rebase<CR>
+nnoremap <leader>gm :action Git.Merge<CR>
+
+""" WINDOW MANAGEMENT """
+" Splits (matching Neovim's splitbelow/splitright behavior)
+nnoremap <leader>ws :action SplitHorizontally<CR>
+nnoremap <leader>wv :action SplitVertically<CR>
+nnoremap <leader>wc :action Unsplit<CR>
+nnoremap <leader>wC :action UnsplitAll<CR>
+nnoremap <leader>wo :action NextSplitter<CR>
+nnoremap <leader>wp :action PrevSplitter<CR>
+nnoremap <leader>wf :action HideAllWindows<CR>
+nnoremap <leader>ww :action NextProjectWindow<CR>
+
+""" SEARCH AND NAVIGATION """
+nnoremap <leader>h :action Back<CR>
+nnoremap <leader>l :action Forward<CR>
+nnoremap <leader>L :action RecentLocations<CR>
+nnoremap <leader>u :action FindUsages<CR>
+nnoremap <leader>C :action CallHierarchy<CR>
+nnoremap <leader>c :action GotoClass<CR>
+nnoremap <leader>s :action GotoSymbol<CR>
+nnoremap <leader>m :action ToggleBookmark<CR>
+nnoremap <leader>; :action FileStructurePopup<CR>
+nnoremap <leader>M :action ActivateStructureToolWindow<CR>
+nnoremap <leader>i :action GotoImplementation<CR>
+nnoremap <leader>U :action GotoSuperMethod<CR>
+nnoremap <leader>I :action SelectIn<CR>
+nnoremap <leader>a :action RecentChangedFiles<CR>
+nnoremap <leader>t :action GotoTest<CR>
+nnoremap <leader>p :action JumpToLastWindow<CR>
+nnoremap <leader>b :action ShowBookmarks<CR>
+
+""" CODE ACTIONS """
+nnoremap <leader>r :action Refactorings.QuickListPopupAction<CR>
+nnoremap [[ :action MethodUp<CR>
+nnoremap ]] :action MethodDown<CR>
+nnoremap zc :action CollapseRegion<CR>
+nnoremap zo :action ExpandRegion<CR>
+nnoremap <leader>zc :action CollapseAllRegions<CR>
+nnoremap <leader>zo :action ExpandAllRegions<CR>
+
+""" TERMINAL """
+nnoremap <c-t> :action ActivateTerminalToolWindow<CR>
+nnoremap <leader>t :action Terminal.OpenInTerminal<CR>
+
+""" TAB MANAGEMENT """
+nnoremap <leader>q :action CloseContent<CR>
+nnoremap <leader>Q :action ReopenClosedTab<CR>
+
+""" RUNNING AND DEBUGGING """
+nnoremap ,c :action CompileDirty<CR>
+nnoremap ,r :action Run<CR>
+nnoremap ,R :action RunAnything<CR>
+nnoremap ,b :action Debug<CR>
+nnoremap ,d :action DebugClass<CR>
+nnoremap ,t :action RerunTests<CR>
+nnoremap ,T :action RerunFailedTests<CR>
+nnoremap ,p :action ToggleLineBreakpoint<CR>
+nnoremap ,i :action ParameterInfo<CR>
+
+""" MISCELLANEOUS """
+" Quick access to ideavimrc
+nnoremap \e :e ~/.ideavimrc<CR>
+nnoremap \r :action IdeaVim.ReloadVimRc.reload<CR>
+
+" Use semicolon for command mode (from Neovim)
+nnoremap ; :
+
+" Escape alternatives
+map <C-c> <Esc>
+
+" Distraction free mode
+nnoremap <c-z> :action ToggleDistractionFreeMode<CR>
+
+" Font size
+nnoremap <C-=> :action EditorIncreaseFontSize<CR>
+nnoremap <C--> :action EditorDecreaseFontSize<CR>
+
