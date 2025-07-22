@@ -5,7 +5,7 @@ local config = wezterm.config_builder()
 config.color_scheme = "Catppuccin Mocha"
 
 -- Default shell
-config.default_prog = { "/opt/homebrew/bin/nu" }
+config.default_prog = { "/bin/zsh" }
 
 -- Font configuration
 config.font = wezterm.font("JetBrains Mono", { weight = "Medium" })

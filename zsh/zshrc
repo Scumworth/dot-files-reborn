@@ -1,4 +1,8 @@
 export HOME=/Users/danielmcninch
+
+# Add Homebrew to PATH first
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 . $HOME/.asdf/asdf.sh
 
 # XDG Base Directory
